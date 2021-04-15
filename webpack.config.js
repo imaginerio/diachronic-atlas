@@ -1,4 +1,5 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   mode: 'development',
@@ -6,6 +7,7 @@ module.exports = {
   entry: {
     app: './src/index.js',
   },
+  externals: [nodeExternals()],
   output: {
     path: path.join(__dirname, './dist'),
     filename: 'index.js',
@@ -14,27 +16,13 @@ module.exports = {
     publicPath: '/dist/',
     umdNamedDefine: true,
   },
+  target: 'node',
   devtool: 'source-map',
   resolve: {
     alias: {
       'mapbox-gl': 'maplibre-gl',
       react: path.resolve(__dirname, './node_modules/react'),
       'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
-    },
-  },
-  externals: {
-    // Don't bundle react or react-dom
-    react: {
-      commonjs: 'react',
-      commonjs2: 'react',
-      amd: 'React',
-      root: 'React',
-    },
-    'react-dom': {
-      commonjs: 'react-dom',
-      commonjs2: 'react-dom',
-      amd: 'ReactDOM',
-      root: 'ReactDOM',
     },
   },
   module: {
