@@ -11,8 +11,8 @@
             "type": "vector"
         }
     },
-    "sprite": "mapbox://sprites/axismaps/ck7garlfe3hgo1ikih7w84cu7/0ebgij4h38ap6ce5elewniqee",
-    "glyphs": "mapbox://fonts/axismaps/{fontstack}/{range}.pbf",
+    "sprite": "",
+    "glyphs": "http://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
     "layers": [
         {
             "id": "background",
