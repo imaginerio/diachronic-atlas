@@ -52,6 +52,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.css$/i,
+        use: [{ loader: 'style-loader', options: { injectType: 'styleTag' } }, 'css-loader'],
+      },
     ],
   },
 };
