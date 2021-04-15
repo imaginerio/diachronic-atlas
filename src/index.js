@@ -4,7 +4,6 @@ import ReactMapGL, { Source, Layer, Marker, NavigationControl } from 'react-map-
 
 import { setStyleYear, fitBounds, setActiveLayer } from './mapUtils';
 import styles from './styles.module.css';
-import 'maplibre-gl/dist/maplibre-gl.css';
 
 const Atlas = ({
   size,
