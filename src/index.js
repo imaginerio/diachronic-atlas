@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactMapGL, {
+import Map, {
   Source,
   Layer,
   NavigationControl,
-  WebMercatorViewport,
   AttributionControl,
 } from 'react-map-gl';
+import { WebMercatorViewport } from '@deck.gl/core';
 import bboxPolygon from '@turf/bbox-polygon';
 
 import ViewMarkers from './ViewMarkers';
@@ -68,7 +68,8 @@ const Atlas = ({
     });
   }, [width, height]);
 
-  const onViewportChange = nextViewport => {
+  const onMove = evt => {
+    const nextViewport = evt.viewState;
     // eslint-disable-next-line no-param-reassign
     nextViewport.zoom = Math.max(minZoom, Math.min(nextViewport.zoom, maxZoom));
     setMapViewport(nextViewport);
@@ -76,7 +77,7 @@ const Atlas = ({
   };
 
   useEffect(() => {
-    const map = mapRef.current.getMap();
+    const map = mapRef.current?.getMap();
     if (map) {
       const range = dates || [year, year];
       setStyle(setActiveLayer(setStyleYear(range, JSON.parse(styleRef.current)), highlightedLayer));
@@ -108,10 +109,10 @@ const Atlas = ({
   }, [drawBoxStart, drawBoxEnd]);
 
   return (
-    <ReactMapGL
+    <Map
       ref={mapRef}
       mapStyle={style}
-      onViewportChange={onViewportChange}
+      onMove={onMove}
       interactiveLayerIds={viewpoints ? ['viewpoints'] : null}
       dragPan={!isDrawing}
       getCursor={({ isHovering, isDragging }) => {
@@ -143,7 +144,7 @@ const Atlas = ({
           setDrawBoxEnd(e.lngLat);
         }
       }}
-      onHover={e => {
+      onMouseEnter={e => {
         if (!viewpoints) return;
 
         if (hoveredStateId !== null) {
@@ -151,7 +152,7 @@ const Atlas = ({
             .getMap()
             .setFeatureState({ source: 'viewpoints', id: hoveredStateId }, { hover: false });
         }
-        if (e.features.length > 0) {
+        if (e.features && e.features.length > 0) {
           mapRef.current
             .getMap()
             .setFeatureState({ source: 'viewpoints', id: e.features[0].id }, { hover: true });
@@ -243,7 +244,7 @@ const Atlas = ({
       >
         <NavigationControl />
       </div>
-    </ReactMapGL>
+    </Map>
   );
 };
 

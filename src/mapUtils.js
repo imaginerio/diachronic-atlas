@@ -1,7 +1,8 @@
 import bbox from '@turf/bbox';
 import { isArray } from 'lodash';
 import { hsl } from 'd3';
-import { WebMercatorViewport, FlyToInterpolator } from 'react-map-gl';
+import { WebMercatorViewport } from '@deck.gl/core';
+import { FlyToInterpolator } from '@deck.gl/core';
 
 const setStyleYear = (range, currentStyle) => {
   const style = { ...currentStyle };

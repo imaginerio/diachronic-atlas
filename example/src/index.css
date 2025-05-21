@@ -12,3 +12,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Legend styles */
+.legend-container {
+  padding: 10px;
+}
+
+.legend-layer {
+  margin-bottom: 15px;
+}
+
+.legend-type {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.legend-type p {
+  margin-right: 10px;
+}
+
+.legend-swatch {
+  width: 35px;
+  height: 20px;
+  margin: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

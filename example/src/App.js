@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
-import { ChakraProvider, Box } from '@chakra-ui/react';
 
 import { Atlas, getLegend } from 'diachronic-atlas';
 
@@ -36,7 +35,7 @@ const App = () => {
   }, [layers]);
 
   return (
-    <ChakraProvider>
+    <>
       <Atlas
         mapStyle={style}
         year={1800}
@@ -62,14 +61,15 @@ const App = () => {
       />
 
       {legend && (
-        <div>
+        <div className="legend-container">
           {legend.map(layer => {
             return (
-              <div key={layer.name}>
+              <div key={layer.name} className="legend-layer">
                 <p>{layer.title}</p>
                 {layer.types.map(type => (
-                  <Box
+                  <div
                     key={type.type}
+                    className="legend-type"
                     onClick={() =>
                       setHighlightedLayer(
                         highlightedLayer &&
@@ -81,15 +81,26 @@ const App = () => {
                     }
                   >
                     <p>{type.type}</p>
-                    <Box {...type.swatch} />
-                  </Box>
+                    <div className="legend-swatch" style={
+                      type.swatch.children
+                        ? { color: type.swatch.color }
+                        : {
+                            backgroundColor: type.swatch.backgroundColor,
+                            borderColor: type.swatch.borderColor,
+                            borderWidth: type.swatch.borderWidth ? `${type.swatch.borderWidth}px` : undefined,
+                            borderStyle: type.swatch.borderWidth ? 'solid' : undefined
+                          }
+                    }>
+                      {type.swatch.children}
+                    </div>
+                  </div>
                 ))}
               </div>
             );
           })}
         </div>
       )}
-    </ChakraProvider>
+    </>
   );
 };
 
